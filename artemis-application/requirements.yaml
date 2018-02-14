@@ -1,0 +1,4 @@
+dependencies:
+  - name: activemq-artemis
+    version: "0.1.0"
+    repository: "file://../activemq-artemis"

@@ -1,0 +1,15 @@
+producerReplicaCount: 1
+consumerReplicaCount: 1
+
+queueName: test_queue
+
+image:
+  repository: docker.io/carbonin/messaging-test
+  tag: latest
+  pullPolicy: Always
+
+activemq-artemis:
+  # User and password for the artemis broker
+  # If left empty they will be generated using randAlphaNum
+  user: ""
+  password: ""

@@ -1,0 +1,35 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ template "artemis-application.fullname" . }}-queue-producer
+  labels:
+    app: {{ template "artemis-application.name" . }}
+    chart: {{ template "artemis-application.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.consumerReplicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "artemis-application.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "artemis-application.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: queue-producer
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: MESSAGING_MODE
+            value: produce
+          - name: MESSAGING_WAIT
+            value: "1"
+          - name: QUEUE_NAME
+            value: {{ .Values.queueName }}
+          - name: ARTEMIS_SERVICE_NAME
+            value: {{ .Release.Name }}-activemq-artemis
+          {{- include "activemq-artemis.auth" $ | indent 8 }}
