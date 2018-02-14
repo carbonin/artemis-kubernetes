@@ -38,11 +38,11 @@ List the environment variables used for pulling the artemis user and password fr
   - name: ARTEMIS_USER
     valueFrom:
       secretKeyRef:
-        name: {{ template "activemq-artemis.fullname" . }}
+        name: {{ .Release.Name }}-activemq-artemis
         key: artemis-user
   - name: ARTEMIS_PASSWORD
     valueFrom:
       secretKeyRef:
-        name: {{ template "activemq-artemis.fullname" . }}
+        name: {{ .Release.Name }}-activemq-artemis
         key: artemis-password
 {{- end }}
