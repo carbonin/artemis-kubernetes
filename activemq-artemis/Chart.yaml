@@ -1,0 +1,4 @@
+appVersion: "2.4.0"
+description: A Helm chart for deploying an ActiveMQ Artemis queue
+name: activemq-artemis
+version: 0.1.0

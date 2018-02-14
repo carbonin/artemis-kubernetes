@@ -1,0 +1,10 @@
+replicaCount: 1
+
+image:
+  repository: docker.io/carbonin/manageiq-artemis
+  tag: 2.4.0
+  pullPolicy: IfNotPresent
+
+# Authentication information for the artemis server
+# artemisUser:
+# artemisPassword:

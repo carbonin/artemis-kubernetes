@@ -1,0 +1,40 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ template "activemq-artemis.fullname" . }}
+  labels:
+    app: {{ template "activemq-artemis.name" . }}
+    chart: {{ template "activemq-artemis.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "activemq-artemis.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "activemq-artemis.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: stomp
+              containerPort: 61613
+              protocol: TCP
+          env:
+          - name: ARTEMIS_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "activemq-artemis.fullname" . }}
+                key: artemis-user
+          - name: ARTEMIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "activemq-artemis.fullname" . }}
+                key: artemis-password
