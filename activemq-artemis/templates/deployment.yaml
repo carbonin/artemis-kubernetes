@@ -28,13 +28,4 @@ spec:
               containerPort: 61613
               protocol: TCP
           env:
-          - name: ARTEMIS_USER
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "activemq-artemis.fullname" . }}
-                key: artemis-user
-          - name: ARTEMIS_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "activemq-artemis.fullname" . }}
-                key: artemis-password
+            {{- include "activemq-artemis.auth" . | indent 8 }}

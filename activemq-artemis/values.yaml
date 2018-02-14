@@ -5,6 +5,7 @@ image:
   tag: 2.4.0
   pullPolicy: IfNotPresent
 
-# Authentication information for the artemis server
-# artemisUser:
-# artemisPassword:
+# User and password for the artemis broker
+# If left empty they will be generated using randAlphaNum
+user: ""
+password: ""

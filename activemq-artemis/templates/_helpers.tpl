@@ -30,3 +30,19 @@ Create chart name and version as used by the chart label.
 {{- define "activemq-artemis.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+{{/*
+List the environment variables used for pulling the artemis user and password from the secret
+*/}}
+{{- define "activemq-artemis.auth" }}
+  - name: ARTEMIS_USER
+    valueFrom:
+      secretKeyRef:
+        name: {{ template "activemq-artemis.fullname" . }}
+        key: artemis-user
+  - name: ARTEMIS_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: {{ template "activemq-artemis.fullname" . }}
+        key: artemis-password
+{{- end }}
